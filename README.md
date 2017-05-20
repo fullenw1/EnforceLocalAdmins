@@ -1,37 +1,69 @@
-## Welcome to GitHub Pages
+# tl;dr or the short explanation
+Only once export local administrators group members to a file on a central share
 
-You can use the [editor on GitHub](https://github.com/fullenw1/EnforceLocalAdmins/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```Powershell
+Export-LocalAdminsList -FilePath C:\Temp\ComputerName.txt
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+Then compare the file with the group
 
-### Jekyll Themes
+```Powershell
+Compare-LocalAdminsList -FilePath \\FileServer\AdminLists$\ComputerName.txt
+```
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/fullenw1/EnforceLocalAdmins/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+Or enforce the file to the group
 
-### Support or Contact
+```Powershell
+Import-LocalAdminsList -FilePath \\FileServer\AdminLists$\ComputerName.txt
+```
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+# The full explanation
+## Environments targeted by this module
+- Many servers have different local Administrators members
+- Applicative teams have been granted administrators rights on some servers
+and you want avoid them to add more accounts to the Administrators group
+## Preparation steps
+1. Copy the module to every local server (usually to C:\Program Files\Windows Powershell\Modules)
+2. Export members of the local Administrators group to a file
+
+```Powershell
+Export-LocalAdminsList -FilePath C:\Temp\ComputerName.txt
+```
+
+3. Copy this file to a central  repository.
+
+```Powershell
+Copy-Item -Path C:\Temp\ComputerName.txt -Destination \\FileServer\Z$\AdminLists
+```
+
+## Monitor drifts
+Schedule a Powershell script
+
+```Powershell
+Compare-LocalAdminsList -FilePath \\FileServer\AdminLists$\ComputerName.txt
+```
+
+## Enforce local administrators
+Schedule a Powershell script
+
+```Powershell
+Import-LocalAdminsList -FilePath \\FileServer\AdminLists$\ComputerName.txt
+```
+
+## Additional considerations
+### Requirements
+This module is based on Powershell 5.1 cmdlets.
+### Scheduled script
+Depending on your needs, the script you schedule, to monitor drifts or enforce local administrators,
+can send a mail and/or write an event in the eventlog (which can be monitored by SCOM or another tool).
+### Warning about the central repository
+Permissions on the central repository should be narrowed down
+so that authorized people and computers have only permissions they need.
+
+Typical permissions could look like this:
+
+- Domain admins have Full Control permissions
+- Computers accounts from computers using this module have Read Only permissions
+- Computers accounts from computers not using this module have no access
+- If applicable, you can add the Read-Write permissions on files
+for people who manage matching computers
