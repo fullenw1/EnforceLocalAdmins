@@ -54,7 +54,8 @@ Import-LocalAdminsList -FilePath \\FileServer\AdminLists$\ComputerName.txt
 ### Requirements
 This module is based on Powershell 5.1 cmdlets.
 ### Scheduled script
-Depending on your needs, the script you schedule, to monitor drifts or enforce local administrators,
+- The most secure way to schedule your script is through a GPO or via DSC
+- Depending on your needs, the script you schedule, to monitor drifts or enforce local administrators,
 can send a mail and/or write an event in the eventlog (which can be monitored by SCOM or another tool).
 ### Warning about the central repository
 Permissions on the central repository should be narrowed down
