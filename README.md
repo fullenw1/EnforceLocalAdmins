@@ -50,7 +50,7 @@ Schedule a Powershell script
 Import-LocalAdminsList -FilePath \\FileServer\AdminLists$\ComputerName.txt
 ```
 
-## Additional considerations
+## Additional information
 ### Requirements
 This module is based on Powershell 5.1 cmdlets.
 ### Scheduled script
