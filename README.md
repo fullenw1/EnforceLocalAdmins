@@ -57,6 +57,8 @@ This module is based on Powershell 5.1 cmdlets.
 - The most secure way to schedule your script is through a GPO or via DSC
 - Depending on your needs, the script you schedule, to monitor drifts or enforce local administrators,
 can send a mail and/or write an event in the eventlog (which can be monitored by SCOM or another tool).
+### Common parameters
+Common parameters like -WhatIf, -Verbose and -Confirm are fully supported.
 ### Warning about the central repository
 Permissions on the central repository should be narrowed down
 so that authorized people and computers have only permissions they need.
