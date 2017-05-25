@@ -63,7 +63,7 @@ Common parameters like -WhatIf, -Verbose and -Confirm are fully supported.
 Permissions on the central repository should be narrowed down
 so that authorized people and computers have only permissions they need.
 
-Typical permissions could look like this:
+Typical permissions could be:
 
 - Domain admins have Full Control permissions
 - Computers accounts from computers using this module have Read Only permissions
