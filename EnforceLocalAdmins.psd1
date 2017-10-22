@@ -24,7 +24,7 @@ GUID = '55c48613-4ce1-4833-b92c-01fc42ee63d7'
 Author = 'Luc FULLENWARTH'
 
 # Company or vendor of this module
-CompanyName = 'SopraSteria'
+CompanyName = 'Unknown'
 
 # Copyright statement for this module
 Copyright = '(c) 2017 Luc FULLENWARTH. All rights reserved.'
